@@ -1,0 +1,13 @@
+name: 'Tool - AI Connector'
+type: module
+description: '(Experimental) Provides tools as function calls for the AI module.'
+package: Tools
+core_version_requirement: ^10.3 || ^11
+dependencies:
+  - tool:tool
+  - ai:ai
+
+# Information added by Drupal.org packaging script on 2026-03-20
+version: '1.0.0-alpha10+10-dev'
+project: 'tool'
+datestamp: 1774030078

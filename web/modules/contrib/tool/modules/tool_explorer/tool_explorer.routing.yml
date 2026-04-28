@@ -1,0 +1,23 @@
+tool_explorer.list:
+  path: '/admin/config/tool/explorer'
+  defaults:
+    _controller: '\Drupal\tool_explorer\Controller\ToolExplorerController::listTools'
+    _title: 'Tool Explorer'
+  requirements:
+    _permission: 'administer tool'
+
+tool_explorer.view:
+  path: '/admin/config/tool/explorer/{plugin_id}'
+  defaults:
+    _controller: '\Drupal\tool_explorer\Controller\ToolExplorerController::viewTool'
+    _title_callback: '\Drupal\tool_explorer\Controller\ToolExplorerController::viewToolTitle'
+  requirements:
+    _permission: 'administer tool'
+
+tool_explorer.execute:
+  path: '/admin/config/tool/explorer/{plugin_id}/execute'
+  defaults:
+    _form: '\Drupal\tool_explorer\Form\ToolExecuteForm'
+    _title_callback: '\Drupal\tool_explorer\Controller\ToolExplorerController::getExecuteTitle'
+  requirements:
+    _permission: 'administer tool'

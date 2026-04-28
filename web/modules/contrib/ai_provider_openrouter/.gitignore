@@ -1,0 +1,7 @@
+# Ignore test output, local dev artifacts, and IDE files
+/vendor/
+/node_modules/
+/.idea/
+/.vscode/
+/.phpunit.result.cache
+/web/modules/custom/ai_provider_openrouter/tests/output/

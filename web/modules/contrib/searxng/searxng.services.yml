@@ -1,0 +1,4 @@
+services:
+  searxng.client:
+    class: Drupal\searxng\Service\SearxngClient
+    arguments: ['@http_client', '@config.factory', '@logger.factory']

@@ -1,0 +1,7 @@
+deepchat_force_stream:
+  version: 1.x
+  js:
+    js/deepchat_force_stream.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings

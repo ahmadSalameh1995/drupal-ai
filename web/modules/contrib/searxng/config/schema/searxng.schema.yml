@@ -1,0 +1,22 @@
+searxng.settings:
+  type: mapping
+  label: 'SearXNG settings'
+  mapping:
+    endpoint_url:
+      type: string
+      label: 'SearXNG endpoint URL'
+    api_key:
+      type: string
+      label: 'SearXNG API key'
+    timeout:
+      type: integer
+      label: 'Request timeout (seconds)'
+    categories:
+      type: string
+      label: 'Default categories'
+    language:
+      type: string
+      label: 'Default language'
+    safesearch:
+      type: integer
+      label: 'Default safesearch level'

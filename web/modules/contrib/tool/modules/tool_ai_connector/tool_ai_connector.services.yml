@@ -1,0 +1,4 @@
+services:
+  Drupal\tool_ai_connector\Hook\AiToolsPropertyHooks:
+    class: Drupal\tool_ai_connector\Hook\AiToolsPropertyHooks
+    autowire: true

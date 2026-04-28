@@ -1,0 +1,8 @@
+# Default configuration for the searxng module.
+endpoint_url: ''
+api_key: ''
+timeout: 30
+# Default search options
+categories: ''
+language: 'en'
+safesearch: 1

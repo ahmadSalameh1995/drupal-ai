@@ -1,0 +1,23 @@
+services:
+  plugin.manager.tool:
+    class: Drupal\tool\Tool\ToolManager
+    parent: default_plugin_manager
+
+  plugin.manager.tool.typed_data_adapter:
+    class: Drupal\tool\TypedData\Adapter\TypedDataAdapterManager
+    parent: default_plugin_manager
+
+  tool.normalizer.context_definition:
+    class: Drupal\tool\Normalizer\ContextDefinitionNormalizer
+    tags:
+      - { name: normalizer, priority: 100 }
+
+  tool.normalizer.map_data_definition:
+    class: Drupal\tool\Normalizer\MapDefinitionNormalizer
+    tags:
+      - { name: normalizer, priority: 100 }
+
+  tool.normalizer.legacy_data_definition:
+    class: Drupal\tool\Normalizer\LegacyTypedDataNormalizer
+    tags:
+      - { name: normalizer, priority: 1000 }

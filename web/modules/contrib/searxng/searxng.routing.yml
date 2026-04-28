@@ -1,0 +1,7 @@
+searxng.settings:
+  path: '/admin/config/search/searxng'
+  defaults:
+    _form: '\Drupal\searxng\Form\SearxngSettingsForm'
+    _title: 'SearXNG settings'
+  requirements:
+    _permission: 'administer searxng'

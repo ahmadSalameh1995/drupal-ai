@@ -1,0 +1,6 @@
+amazeeio
+approot
+duckduckgo
+pageno
+pyzz
+safesearch

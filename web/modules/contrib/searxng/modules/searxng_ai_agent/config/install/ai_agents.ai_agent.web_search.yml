@@ -1,0 +1,45 @@
+uuid: bee80966-66c9-47cc-a919-bd928a68e005
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: YvJdYYWLiYR5YQ5v9dPcDJOizHiN_7tEDb9qnS58h28
+id: web_search
+label: 'Web search'
+description: 'When user asks you do do a web search use the searxng tool to retrieve results.'
+system_prompt: 'When user asks you do do a web search use the searxng tool to retrieve results.'
+secured_system_prompt: '[ai_agent:agent_instructions]'
+tools:
+  'ai_agents::ai_agent::web_search_agent': true
+tool_settings:
+  'ai_agents::ai_agent::web_search_agent':
+    return_directly: 1
+    require_usage: 0
+    description_override: ''
+    progress_message: ''
+    use_artifacts: 0
+orchestration_agent: true
+triage_agent: false
+max_loops: 3
+default_information_tools: ''
+tool_usage_limits:
+  'ai_agents::ai_agent::web_search_agent':
+    prompt:
+      action: ''
+      hide_property: 0
+      values: ''
+    files:
+      action: ''
+      hide_property: 0
+      values: ''
+exclude_users_role: false
+masquerade_roles: {  }
+structured_output_enabled: false
+structured_output_schema: ''
+provider: ''
+model: null
+model_max_tokens: null
+model_temperature: '0'
+model_frequency_penalty: null
+model_presence_penalty: null
+model_top_p: null

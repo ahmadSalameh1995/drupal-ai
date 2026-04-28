@@ -1,0 +1,133 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for OpenRouter Provider module.
+ */
+
+/**
+ * Implements hook_deepchat_settings().
+ *
+ * Ensure the DeepChat frontend sends stream=1 so the controller enables
+ * streamed output. This is a lightweight override to help verify streaming
+ * end-to-end without requiring the block UI's Stream toggle.
+ *
+ * Note: If you prefer to control this via the DeepChat block UI, you can
+ * remove or comment this hook.
+ *
+ * @param array<string, mixed> $deepchat
+ *   The DeepChat settings array passed by reference.
+ */
+function ai_provider_openrouter_deepchat_settings(array &$deepchat): void {
+  // Force-enable streaming flag in the DeepChat connect settings.
+  // The DeepChat API controller expects an integer 1 for stream.
+  $deepchat['connect']['stream'] = TRUE;
+  if (empty($deepchat['connect']['additionalBodyProps']) || !is_array($deepchat['connect']['additionalBodyProps'])) {
+    $deepchat['connect']['additionalBodyProps'] = [];
+  }
+  // Use boolean TRUE to align with DeepChat/OpenRouter expectations.
+  $deepchat['connect']['additionalBodyProps']['stream'] = TRUE;
+}
+
+/**
+ * Implements hook_page_attachments_alter().
+ *
+ * Ensure that drupalSettings for DeepChat requests stream responses. The
+ * DeepChat block sets connect values after hook_deepchat_settings(), so we
+ * override at the page attachments stage to ensure the final payload includes
+ * stream = 1.
+ *
+ * @param array<string, mixed> $attachments
+ *   Page attachments array (by reference).
+ */
+function ai_provider_openrouter_page_attachments_alter(array &$attachments): void {
+  if (isset($attachments['#attached']['drupalSettings']['ai_deepchat'])) {
+    $settings = &$attachments['#attached']['drupalSettings']['ai_deepchat'];
+    // Determine if the selected assistant is agent-based.
+    // IMPORTANT: ai_assistant_api routes to the AgentRunner whenever the
+    // ai_agent config property is set (non-empty), regardless of selected tools.
+    // To match that behavior and avoid mismatches, treat any non-empty ai_agent
+    // as agent-based here as well.
+    $is_agent = FALSE;
+    if (!empty($settings['assistant_id'])) {
+      try {
+        $assistant = \Drupal::entityTypeManager()->getStorage('ai_assistant')->load($settings['assistant_id']);
+        if ($assistant) {
+          /** @var array<string, mixed> $assistantData */
+          $assistantData = $assistant->toArray();
+          $ai_agent_id = $assistantData['ai_agent'] ?? NULL;
+          $is_agent = !empty($ai_agent_id);
+        }
+      }
+      catch (\Throwable $e) {
+        // Ignore if entity cannot be loaded.
+      }
+    }
+    // Expose a flag so frontend JS can decide as well.
+    $settings['is_agent'] = $is_agent;
+
+    // Only force streaming for legacy (non-agent) assistants.
+    if (!$is_agent) {
+      // Initialize structures if needed.
+      if (!isset($settings['connect']) || !is_array($settings['connect'])) {
+        $settings['connect'] = [];
+      }
+      $settings['connect']['stream'] = TRUE;
+      if (!isset($settings['connect']['additionalBodyProps']) || !is_array($settings['connect']['additionalBodyProps'])) {
+        $settings['connect']['additionalBodyProps'] = [];
+      }
+      $settings['connect']['additionalBodyProps']['stream'] = TRUE;
+    }
+    else {
+      // Explicitly disable streaming for agent-based assistants to avoid
+      // incompatibilities in ai_agents which expects non-streamed ChatMessage.
+      if (!isset($settings['connect']) || !is_array($settings['connect'])) {
+        $settings['connect'] = [];
+      }
+      $settings['connect']['stream'] = FALSE;
+      if (!isset($settings['connect']['additionalBodyProps']) || !is_array($settings['connect']['additionalBodyProps'])) {
+        $settings['connect']['additionalBodyProps'] = [];
+      }
+      $settings['connect']['additionalBodyProps']['stream'] = FALSE;
+    }
+    // Ensure our frontend patch runs after the DeepChat library.
+    $attachments['#attached']['library'][] = 'ai_provider_openrouter/deepchat_force_stream';
+  }
+}
+
+/**
+ * Implements hook_preprocess_ai_deepchat().
+ *
+ * Ensure the rendered DeepChat connect config sets stream in the component
+ * props. The DeepChat block JSON-encodes arrays in #deepchat_settings, so we
+ * decode, alter, and re-encode the 'connect' object.
+ *
+ * @param array<string, mixed> $variables
+ *   Preprocess variables array (by reference).
+ */
+function ai_provider_openrouter_preprocess_ai_deepchat(array &$variables): void {
+  // Respect agent-based assistants; do not force streaming in that case.
+  if (!empty($variables['drupalSettings']['ai_deepchat']['is_agent'])) {
+    return;
+  }
+  if (!empty($variables['deepchat_settings']['connect'])) {
+    $connect_raw = $variables['deepchat_settings']['connect'];
+    // Connect may already be a JSON string; decode if so.
+    if (is_string($connect_raw)) {
+      $connect = json_decode($connect_raw, TRUE) ?? [];
+    }
+    else {
+      $connect = is_array($connect_raw) ? $connect_raw : [];
+    }
+
+    $connect['stream'] = TRUE;
+    if (empty($connect['additionalBodyProps']) || !is_array($connect['additionalBodyProps'])) {
+      $connect['additionalBodyProps'] = [];
+    }
+    // Use boolean TRUE to align with DeepChat/OpenRouter expectations.
+    $connect['additionalBodyProps']['stream'] = TRUE;
+
+    // Re-encode to match DeepChat block expectations.
+    $variables['deepchat_settings']['connect'] = json_encode($connect);
+  }
+}

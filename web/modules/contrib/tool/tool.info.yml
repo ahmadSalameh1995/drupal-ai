@@ -1,0 +1,10 @@
+name: 'Tool'
+type: module
+description: 'Provides a tool plugin for creating well defined actions.'
+package: Tools
+core_version_requirement: ^10.3 || ^11
+
+# Information added by Drupal.org packaging script on 2026-03-20
+version: '1.0.0-alpha10+10-dev'
+project: 'tool'
+datestamp: 1774030078

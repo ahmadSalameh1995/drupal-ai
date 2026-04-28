@@ -1,0 +1,9 @@
+# Permissions for the OpenRouter AI Provider module.
+administer ai providers:
+  title: 'Administer AI providers'
+  description: 'Access to configure AI provider settings.'
+  restrict access: true
+
+use ai provider openrouter:
+  title: 'Use OpenRouter AI provider'
+  description: 'Access to use the OpenRouter AI provider for content generation and other features.'

@@ -1,0 +1,23 @@
+name: 'OpenRouter Provider'
+type: module
+description: 'AI Provider plugin module for connecting to OpenRouter'
+package: AI Providers
+core_version_requirement: ^10.5 || ^11.2
+# version: 1.1.4
+
+# Core dependencies
+dependencies:
+  - drupal:ai
+  - drupal:key
+
+# Third-party dependencies
+# These are managed by Composer
+# - openai-php/client: ^0.7
+
+# Configure link for the module page
+configure: ai_provider_openrouter.settings
+
+# Information added by Drupal.org packaging script on 2026-03-21
+version: '1.1.4'
+project: 'ai_provider_openrouter'
+datestamp: 1774081715

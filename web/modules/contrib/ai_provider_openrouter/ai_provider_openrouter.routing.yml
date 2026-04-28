@@ -1,0 +1,7 @@
+ai_provider_openrouter.settings:
+  path: '/admin/config/ai/providers/openrouter/settings'
+  defaults:
+    _form: '\Drupal\ai_provider_openrouter\Form\OpenRouterConfigForm'
+    _title: 'OpenRouter Settings'
+  requirements:
+    _permission: 'administer ai providers'

@@ -1,0 +1,31 @@
+{
+  "name": "drupal/ai_provider_openrouter",
+  "description": "OpenRouter provider for the Drupal AI module",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://www.drupal.org/project/ai_provider_openrouter",
+  "authors": [
+    {
+      "name": "Jeff Bruton",
+      "email": "jeff@bruton.ai",
+      "homepage": "https://www.drupal.org/u/bdsweb",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/ai_provider_openrouter",
+    "source": "https://git.drupalcode.org/project/ai_provider_openrouter"
+  },
+  "require": {
+    "php": ">=8.1",
+    "drupal/core": "^10.3 || ^11",
+    "drupal/ai": "^1.2.7",
+    "drupal/key": "^1.18",
+    "openai-php/client": ">=0.10.1"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

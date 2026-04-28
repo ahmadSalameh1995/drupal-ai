@@ -1,0 +1,10 @@
+{
+  "name": "drupal/searxng",
+  "description": "Integrates the SearXNG open-source search engine with Drupal. Provides a configurable connector to query SearXNG and display results within Drupal.",
+  "type": "drupal-module",
+  "require": {
+    "drupal/ai": "^1.1",
+    "drupal/ai_agents": "^1.1",
+    "drupal/tool": "^1.0@alpha"
+  }
+}

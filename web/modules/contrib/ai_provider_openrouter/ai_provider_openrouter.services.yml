@@ -1,0 +1,15 @@
+services:
+  ai_provider_openrouter.client:
+    class: 'Drupal\ai_provider_openrouter\Service\OpenRouterClient'
+    arguments:
+      - '@config.factory'
+      - '@key.repository'
+      - '@logger.channel.ai_provider_openrouter'
+      - '@http_client'
+    public: true
+
+  logger.channel.ai_provider_openrouter:
+    class: 'Drupal\Core\Logger\LoggerChannel'
+    factory: ['@logger.factory', 'get']
+    arguments: ['ai_provider_openrouter']
+    public: false

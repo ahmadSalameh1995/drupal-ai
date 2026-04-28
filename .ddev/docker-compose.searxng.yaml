@@ -1,0 +1,26 @@
+services:
+  searxng:
+    container_name: ddev-${DDEV_SITENAME}-searxng
+    image: searxng/searxng:latest
+    restart: unless-stopped
+    environment:
+      BASE_URL: https://${DDEV_SITENAME}.ddev.site:8081/
+      INSTANCE_NAME: ${DDEV_SITENAME} SearXNG
+      HTTP_EXPOSE: "8080:8080"
+      HTTPS_EXPOSE: "8081:8080"
+      VIRTUAL_HOST: ${DDEV_SITENAME}.ddev.site
+    volumes:
+      - ./searxng:/etc/searxng
+    labels:
+      com.ddev.approot: ${DDEV_APPROOT}
+      com.ddev.site-name: ${DDEV_SITENAME}
+    networks:
+      ddev_default: null
+      default: null
+
+networks:
+  ddev_default:
+    name: ddev_default
+    external: true
+  default:
+    name: ddev-${DDEV_SITENAME}_default

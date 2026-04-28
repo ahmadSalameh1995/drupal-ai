@@ -1,0 +1,6 @@
+searxng.admin_settings:
+  title: 'SearXNG'
+  description: 'Configure the SearXNG endpoint.'
+  parent: system.admin_config_search
+  route_name: searxng.settings
+  weight: 100

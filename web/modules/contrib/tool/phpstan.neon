@@ -1,0 +1,27 @@
+# Configuration file for PHPStan static code checking, see https://phpstan.org .
+# PHPStan is triggered on Drupal CI in commit-code-check.sh.
+includes:
+  - phar://phpstan.phar/conf/bleedingEdge.neon
+
+parameters:
+  level: 3
+  reportUnmatchedIgnoredErrors: false
+  scanDirectories:
+    - ../../../../vendor/drush/drush/src-symfony-compatibility
+  paths:
+    - .
+  fileExtensions:
+    - php
+    - module
+    - inc
+    - install
+  ignoreErrors:
+    - identifier: missingType.iterableValue
+    - identifier: missingType.generics
+    # new static() is a best practice in Drupal, so we cannot fix that.
+    - "#^Unsafe usage of new static#"
+    - '#^Attribute class Drupal\\ai\\OperationType\\Chat\\Tools\\ToolsPropertyInputInterface does not exist\.$#'
+    - '#^Attribute class Drupal\\tool_ai_connector\\Plugin\\AiFunctionCall\\ToolPluginBase does not exist\.$#'
+    - '#^Attribute class Drupal\\ai\\Service\\FunctionCalling\\FunctionCallInterface does not exist\.$#'
+  bootstrapFiles:
+    - phpstan-bootstrap.php

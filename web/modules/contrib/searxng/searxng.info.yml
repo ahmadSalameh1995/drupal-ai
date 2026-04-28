@@ -1,0 +1,11 @@
+name: SearXNG
+type: module
+description: 'Integrates the SearXNG open-source search engine with Drupal. Provides a configurable connector to query SearXNG and display results within Drupal.'
+package: Search
+core_version_requirement: ^10 || ^11
+configure: searxng.settings
+
+# Information added by Drupal.org packaging script on 2025-11-28
+version: '1.0.0-alpha1'
+project: 'searxng'
+datestamp: 1764361887

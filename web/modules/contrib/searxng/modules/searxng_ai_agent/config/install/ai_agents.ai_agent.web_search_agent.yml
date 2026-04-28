@@ -1,0 +1,46 @@
+uuid: 68ab8042-dcf4-4d55-a1f2-d5425797eb02
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: ZxyXxDTVnJB7DwxQbiOvCc65vga_0Xy00pyzz8iAwHc
+id: web_search_agent
+label: 'Web Search agent with tool'
+description: 'This is a web search agent.'
+system_prompt: |-
+  You are able to search the web by using the searxng tool.
+  Provide concise answers and do not use information that you were trained on.
+  Only use information coming from the results of web search.
+
+  Provide at the bottom of the response the links you found as reference.
+secured_system_prompt: '[ai_agent:agent_instructions]'
+tools:
+  'tool:ai_agent:searxng': true
+tool_settings:
+  'tool:ai_agent:searxng':
+    return_directly: 0
+    require_usage: 0
+    description_override: ''
+    progress_message: ''
+    use_artifacts: 0
+orchestration_agent: false
+triage_agent: false
+max_loops: 30
+default_information_tools: ''
+tool_usage_limits:
+  'tool:ai_agent:searxng':
+    search_term:
+      action: ''
+      hide_property: 0
+      values: ''
+exclude_users_role: false
+masquerade_roles: {  }
+structured_output_enabled: false
+structured_output_schema: ''
+provider: amazeeio
+model: chat_with_complex_json
+model_max_tokens: '4096'
+model_temperature: '0'
+model_frequency_penalty: null
+model_presence_penalty: null
+model_top_p: '1'
